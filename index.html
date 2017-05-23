@@ -1,0 +1,129 @@
+<html>
+<head>
+	<title>Progranimals</title>
+
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+
+    <script type="text/javascript" src="./jquery-2.1.0.js.download"></script>
+
+    <!-- function that gets called once Blockly frame loads //-->
+	<script type="text/javascript">
+		window.blockly_loaded = function(blockly) {
+			return window.Blockly = blockly;
+		}
+
+		window.run_code = function() {
+            code = window.Blockly.JavaScript.workspaceToCode();
+						var array = code.split(",");
+
+						for(var x = 0; x < array.length; x++){
+							if(array[x]=='C') && canMove(player.x, player.y-1)
+									player.y--;
+							else if(array[x]=='B') && canMove(player.x, player.y+1)
+								player.y++;
+							else if(array[x]=='E') && canMove(player.x-1, player.y)
+								player.x--;
+							else if(array[x]=='D') && canMove(player.x+1, player.y)
+								player.x++;
+					    draw();
+					    e.preventDefault();
+		        }
+
+            window.alert(code);
+						window.alert(array.length);
+			eval(code);
+		}
+	</script>
+
+<script type="text/javascript">//<![CDATA[
+$(window).load(function(){
+var canvas = $('#GameBoardCanvas');
+//The game board 1 = walls, 0 = free space, and -1 = the goal
+var board = [
+    [ 0, 0, 0, 0, 0, 0, 0 ],
+    [ 1, 0, 0, 0, 0, 0, 0 ],
+    [ 1, 0, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 1, 1 ],
+    [ 0, 1, 1, 0, 0, 0, 1 ],
+    [ 0, 0, 1, 1, 1, 1, 1 ],
+    [-1, 0, 1, 0, 1, 1, 0 ]
+];
+var player = {
+    x: 0,
+    y: 0
+};
+
+//Draw the game board
+function draw(){
+    var width = canvas.width();
+    var blockSize = width/board.length;
+    var ctx = canvas[0].getContext('2d');
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, width, width);
+    ctx.fillStyle="green";
+    //Loop through the board array drawing the walls and the goal
+    for(var y = 0; y < board.length; y++){
+        for(var x = 0; x < board[y].length; x++){
+            //Draw a wall
+            if(board[y][x] === 1){
+                ctx.fillRect(x*blockSize, y*blockSize, blockSize, blockSize);
+            }
+            //Draw the goal
+            else if(board[y][x] === -1){
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = "gold";
+                ctx.moveTo(x*blockSize, y*blockSize);
+                ctx.lineTo((x+1)*blockSize, (y+1)*blockSize);
+                ctx.moveTo(x*blockSize, (y+1)*blockSize);
+                ctx.lineTo((x+1)*blockSize, y*blockSize);
+                ctx.stroke();
+            }
+        }
+    }
+
+    var half = blockSize/4;
+    var imageObj = new Image();
+    imageObj.onload = function() {
+        ctx.drawImage(imageObj, player.x*blockSize+half, player.y*blockSize+half);
+    };
+    imageObj.src = 'teste.jpg';
+
+}
+
+//Check to see if the new space is inside the board and not a wall
+function canMove(x, y){
+    return (y>=0) && (y<board.length) && (x >= 0) && (x < board[y].length) && (board[y][x] != 1);
+}
+
+$(document).keyup(function(e){
+    if((e.which == 38) && canMove(player.x, player.y-1))//Up arrow
+        player.y--;
+    else if((e.which == 40) && canMove(player.x, player.y+1)) // down arrow
+        player.y++;
+    else if((e.which == 37) && canMove(player.x-1, player.y))
+        player.x--;
+    else if((e.which == 39) && canMove(player.x+1, player.y))
+        player.x++;
+    draw();
+    e.preventDefault();
+});
+
+draw();
+});//]]>
+
+</script>
+
+    </head>
+<body>
+	<h1 id="header">Progranimals</h1>
+	<div id="blockly_editor">
+		<!-- Blockly will be injected in the iframe below //-->
+		<iframe id="blockly" src="blockly.html" width="100%"></iframe>
+	</div>
+	<button id="button_run" onclick="run_code()">
+		Start
+	</button>
+	<canvas id="GameBoardCanvas" width="400px" height="400px"></canvas>
+</body>
+</html>
