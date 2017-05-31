@@ -19,15 +19,15 @@
 
 			var canvas = $('#GameBoardCanvas');
 
-			//The game board 1 = walls, 0 = free space, and -1 = the goal
+			//ANTIGO The game board 1 = walls, 0 = free space, and -1 = the goal
 			var board = [
-    		[ 0, 0, 0, 0, 0, 0, 0 ],
-    		[ 1, 0, 1, 0, 0, 0, 0 ],
-    		[ 1, 0, 1, 0, 0, 0, 0 ],
-    		[ 0, 0, 0, 0, 1, 1, 1 ],
-    		[ 0, 1, 1, 0, 0, 0, 1 ],
-    		[ 0, 0, 1, 1, 1, 1, 1 ],
-    		[-1, 0, 1, 0, 1, 1, 0 ]
+			    [ 23, 23, 23, 23, 23, 23, 23 ],
+			    [ 23, 45, 45, 23, 45, 45, 23 ],
+			    [ 23, 5, 11, 23, 19, 5, 23 ],
+			    [ 23, 2, 12, 23, 18, 2, 23 ],
+			    [ 23, 2, 45, 45, 45, 2, 23 ],
+			    [ 23, 2, 5, 5, 5, 2, 23 ],
+			    [ 23, 35, 35, 35, 35, 35, 23 ]
 			];
 
 			var player = {
@@ -35,57 +35,30 @@
     		y: 0
 			};
 
-
-
 			//Draw the game board
 			function draw(){
     		var width = canvas.width();
     		var blockSize = width/board.length;
     		var ctx = canvas[0].getContext('2d');
-    		ctx.setTransform(1, 0, 0, 1, 0, 0);
-    		ctx.clearRect(0, 0, width, width);
-    		ctx.fillStyle="green";
-
+    		//ctx.setTransform(1, 0, 0, 1, 0, 0);
+    		//ctx.clearRect(0, 0, width, width);
 				//Loop through the board array drawing the walls and the goal
     		for(var y = 0; y < board.length; y++){
         	for(var x = 0; x < board[y].length; x++){
-            //Draw a wall
-            if(board[y][x] === 1){
-                //ctx.fillRect(x*blockSize, y*blockSize, blockSize, blockSize);
-
-								var img = new Image();
-								img.onload = function () {
-						    	ctx.drawImage(img, 0, 0, 64, 64);
-								}
-								img.src = "2.png";
-								var img = new Image();
-								img.onload = function () {
-						    	ctx.drawImage(img, 64, 0, 64, 64);
-								}
-								img.src = "2.png";
-
-
-            }
-            //Draw the goal
-            else if(board[y][x] === -1){
-            	ctx.beginPath();
-              ctx.lineWidth = 5;
-              ctx.strokeStyle = "gold";
-              ctx.moveTo(x*blockSize, y*blockSize);
-              ctx.lineTo((x+1)*blockSize, (y+1)*blockSize);
-              ctx.moveTo(x*blockSize, (y+1)*blockSize);
-              ctx.lineTo((x+1)*blockSize, y*blockSize);
-              ctx.stroke();
-            }
+						var img = new Image();
+						var posX = blockSize*x;
+						var posY = blockSize*y;
+						img.src = "img/" + board[y][x] + ".png";
+						ctx.drawImage(img, posX, posY, blockSize, blockSize);
         	}
     		}
 
 	    	var half = blockSize/4;
 	    	var imageObj = new Image();
-	    	imageObj.onload = function() {
-	    		ctx.drawImage(imageObj, player.x*blockSize+half, player.y*blockSize+half);
-	    	};
-	    	imageObj.src = 'teste.jpg';
+				imageObj.src = 'img/RafB1.png';
+	    	ctx.drawImage(imageObj, player.x*blockSize, player.y*blockSize, blockSize, blockSize);
+
+	    	imageObj.src = 'img/RafB1.png';
 
 			}
 
@@ -94,6 +67,24 @@
 			}
 
 			$(document).keyup(function(e){
+//	  		var blockSize = 64;
+//	  		var ctx = canvas[0].getContext('2d');
+
+				var width = canvas.width();
+				var blockSize = width/board.length;
+				var ctx = canvas[0].getContext('2d');
+
+
+//				ctx.clearRect(0, 0, width, width);
+//				ctx.fillStyle="green";
+
+
+//				window.alert("img/" + board[player.x][player.y] + ".png");
+
+//				var blocoAtual = new Image();
+//				img.src = "img/" + board[player.x][player.y] + ".png";
+//				ctx.drawImage(blocoAtual, player.x*blockSize, player.y*blockSize, blockSize, blockSize);
+
     		if((e.which == 38) && window.canMove(player.x, player.y-1))//Up arrow
         	player.y--;
     		else if((e.which == 40) && window.canMove(player.x, player.y+1)) // down arrow
@@ -103,9 +94,15 @@
     		else if((e.which == 39) && window.canMove(player.x+1, player.y))
         	player.x++;
     		draw();
-    		e.preventDefault();
+//				var imageObj = new Image();
+//				imageObj.src = 'img/RafB1.png';
+//				ctx.drawImage(imageObj, player.x*blockSize, player.y*blockSize, blockSize, blockSize);
+
+     		e.preventDefault();
 			});
 
+			draw();
+			//-- Ver porque só desenha mapa se chamar Draw() duas vezes
 			draw();
 
 			window.run_code = function() {
@@ -114,9 +111,7 @@
 				var mov = '';
 
 				for(var x = 0; x < array.length; x++){
-					waitSeconds(300);
 					draw();
-					waitSeconds(300);
 					mov = array[x].trim();
 					if((mov == "C") && canMove(player.x, player.y-1))
 						player.y--;
@@ -129,17 +124,6 @@
 
 	      }
 			}
-
-			function waitSeconds(iMilliSeconds) {
-			  var counter = 0
-			      , start = new Date().getTime()
-			      , end = 0;
-			  while (counter < iMilliSeconds) {
-			      end = new Date().getTime();
-			      counter = end - start;
-			  }
-		}
-
 		});
 
 	</script>
@@ -153,6 +137,6 @@
 	<button id="button_run" onclick="run_code()">
 		Start
 	</button>
-	<canvas id="GameBoardCanvas" width="400px" height="400px"></canvas>
+	<canvas id="GameBoardCanvas" width="448px" height="448px"></canvas>
 </body>
 </html>
