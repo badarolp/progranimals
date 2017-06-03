@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Progranimals</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link href="css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+
+    <script type="text/javascript" src="./jquery-2.1.0.js.download"></script>
+
+    <script type="text/javascript">//<![CDATA[
+
+      window.blockly_loaded = function(blockly) {
+        return window.Blockly = blockly;
+      }
+
+      $(window).load(function(){
+
+
+
+
+        var canvas = $('#GameBoardCanvas');
+
+        //ANTIGO The game board 1 = walls, 0 = free space, and -1 = the goal
+        var board = [
+            [ 23, 23, 23, 23, 23, 23, 23 ],
+            [ 23, 23, 23, 23, 23, 23, 23 ],
+            [ 23, 23, 45, 45, 45, 23, 23 ],
+            [ 23, 23, 11, 5, 19, 23, 23 ],
+            [ 23, 23, 46, 35, 47, 23, 23 ],
+            [ 23, 23, 23, 23, 23, 23, 23 ],
+            [ 23, 23, 23, 23, 23, 23, 23 ]
+        ];
+
+        var player = {
+          x: 0,
+          y: 0
+        };
+
+        function inicializaPersonagem(){
+          for(var y = 0; y < board.length; y++){
+            for(var x = 0; x < board[y].length; x++){
+              if(board[y][x] == 11) {
+                player.x = x;
+                player.y = y;
+              }
+            }
+          }
+        }
+
+        //Draw the game board
+        function draw(){
+          var width = canvas.width();
+          var blockSize = width/board.length;
+          var ctx = canvas[0].getContext('2d');
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.clearRect(0, 0, width, width);
+          //Loop through the board array drawing the walls and the goal
+          for(var y = 0; y < board.length; y++){
+            for(var x = 0; x < board[y].length; x++){
+              var img = new Image();
+              var posX = blockSize*x;
+              var posY = blockSize*y;
+              img.src = "img/" + board[y][x] + ".png";
+              ctx.drawImage(img, posX, posY, blockSize, blockSize);
+
+              /*
+              img.onload = function () {
+                ctx.drawImage(img, posX, posY, blockSize, blockSize);
+              }
+              img.src = "img/" + board[y][x] + ".png";
+              */
+
+            }
+          }
+          var imageObj = new Image();
+          imageObj.src = 'img/RafB1.png';
+          ctx.drawImage(imageObj, player.x*blockSize, player.y*blockSize, blockSize, blockSize);
+          imageObj.src = 'img/RafB1.png';
+        }
+
+        window.canMove = function(x, y) {
+          return (y>=0) && (y<board.length) && (x >= 0) && (x < board[y].length) && (board[y][x] >= 0) && (board[y][x] <= 19);
+        }
+
+        $(document).keyup(function(e){
+          if((e.which == 38) && window.canMove(player.x, player.y-1))//Up arrow
+            player.y--;
+          else if((e.which == 40) && window.canMove(player.x, player.y+1)) // down arrow
+            player.y++;
+          else if((e.which == 37) && window.canMove(player.x-1, player.y))
+            player.x--;
+          else if((e.which == 39) && window.canMove(player.x+1, player.y))
+            player.x++;
+          draw();
+          e.preventDefault();
+        });
+
+        inicializaPersonagem();
+        draw();
+        draw();
+
+        window.run_code = function() {
+          code = window.Blockly.JavaScript.workspaceToCode();
+          var array = code.split(",");
+          var mov = '';
+
+          for(var x = 0; x < array.length; x++){
+            mov = array[x].trim();
+            if((mov == "C") && canMove(player.x, player.y-1))
+              player.y--;
+            else if((mov == "B") && canMove(player.x, player.y+1))
+              player.y++;
+            else if((mov == "E") && canMove(player.x-1, player.y))
+              player.x--;
+            else if((mov == "D") && canMove(player.x+1, player.y))
+              player.x++;
+            draw();
+          }
+        }
+      });
+
+    </script>
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#page-top">PROGRANIMALS</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#jogar">Jogar</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#ajuda">Ajuda</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#sobre">Sobre</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+
+
+    <!-- Header -->
+    <header>
+
+      <!-- +++++ Welcome Section +++++ -->
+    	<div id="ww">
+    	    <div class="container">
+
+            <div class="row">
+      				<div class="col-lg-4 col-lg-offset-0">
+                <div id="blockly_editor">
+              		<!-- Blockly will be injected in the iframe below //-->
+              		<iframe id="blockly" src="blockly.html" width="100%"></iframe>
+
+              		<form>
+              		    <div class="content">
+              		        <div class="blc">
+              		           <a href="iniciante.html"><p>1</p></a>
+              		        </div>
+              		        <div class="blc">
+              		           <a href="iniciante2.html"><p>2</p></a>
+              		        </div>
+              		        <div class="blc">
+              		           <a href="iniciante3.html"><p>3</p></a>
+              		        </div>
+              						<div class="blc">
+              		           <a href="iniciante4.html"><p>4</p></a>
+              		        </div>
+              						<div class="blc">
+              		           <a href="iniciante5.html"><p>5</p></a>
+              		        </div>
+              		    </div>
+              		</form>
+              	</div>
+      				</div>
+
+              <div class="col-lg-4 col-lg-offset-0">
+                <canvas id="GameBoardCanvas" width="448px" height="448px"></canvas>
+      				</div>
+
+              <div class="col-lg-4 col-lg-offset-0">
+                <button id="button_run" onclick="run_code()">
+          		      Start
+          	    </button>
+      				</div>
+
+            </div> <!-- /row -->
+    	   </div> <!-- /container -->
+      </div><!-- /ww -->
+    </header>
+
+    <!-- Footer -->
+    <footer class="text-center">
+
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Lucas Badar&oacute; 2017
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>

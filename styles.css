@@ -4,14 +4,14 @@ body
 	font-size: 16pt;
 	background: #ffffff;
 }
-p 
+p
 {
 	line-height:24pt;
-	color:#FFF;
+	color:#1abc9c;
 }
-#header 
+#header
 {
-	color:#6699ff;
+	color:#1abc9c;
 }
 #blockly
 {
@@ -21,7 +21,7 @@ p
 }
 #blockly_editor
 {
-	width:49%;
+	width:100%;
 	float:left;
 }
 #description
@@ -41,4 +41,29 @@ p
     margin-left: auto;
     margin-right: auto;
     background: white;
+}
+
+form .content { width:100%; }
+form .content .blc { position:relative;float:left;width:5%; }
+label { display:block; }
+input[type="text"] { display:block; }
+
+
+#containerBlockly {
+    float:left;
+    width:400px;
+    padding:10px;
+    background:#bfb;
+}
+#containerButton {
+    float:right;
+    width:100px;
+    padding:10px;
+    background:#ddf;
+}
+#containerCanvas {
+    float:right;
+    width:670px;
+    padding:10px;
+    background:#dff;
 }
