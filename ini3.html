@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Progranimals</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link href="css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+
+    <script type="text/javascript" src="./jquery-2.1.0.js.download"></script>
+
+
+    <!-- Blckly -->
+    <script type="text/javascript">
+
+    </script>
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#page-top">PROGRANIMALS</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#jogar">Jogar</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#ajuda">Ajuda</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#sobre">Sobre</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+
+
+
+
+    <!-- Header -->
+    <header>
+
+      <!-- +++++ Welcome Section +++++ -->
+    	<div id="ww">
+    	    <div class="container">
+
+            <div class="row">
+
+                <div id="containerBlockly">
+
+                  <div id="blockly_editor">
+                		<!-- Blockly will be injected in the iframe below //-->
+                		<iframe id="blockly" src="blockly.html" width="100%"></iframe>
+
+                		<form>
+                		    <div class="content">
+                		        <div class="blc">
+                		           <a href="iniciante.html"><p>1</p></a>
+                		        </div>
+                		        <div class="blc">
+                		           <a href="iniciante2.html"><p>2</p></a>
+                		        </div>
+                		        <div class="blc">
+                		           <a href="iniciante3.html"><p>3</p></a>
+                		        </div>
+                						<div class="blc">
+                		           <a href="iniciante4.html"><p>4</p></a>
+                		        </div>
+                						<div class="blc">
+                		           <a href="iniciante5.html"><p>5</p></a>
+                		        </div>
+                		    </div>
+                		</form>
+                	</div>
+
+                </div>
+
+                <div id="containerEngine">
+                    <div id="containerCanvas">
+                      <canvas id="GameBoardCanvas" width="448px" height="448px" style='background-image: url(mapa01.png)'></canvas>
+                    </div>
+                    <div id="containerButton">
+                      <button id="button_run" onclick="run_code()">Start</button>
+                    </div>
+                    <div id="containerButton">
+                      <button id="button_run" onclick="run_code()">Restart</button>
+                    </div>
+                    <div id="containerButton">
+                      <label id="debugX">x = 0</label>
+                    </div>
+                    <div id="containerButton">
+                      <label id="debugY">y = 0</label>
+                    </div>
+                    <div id="containerButton">
+                      <label id="tX">tx = 0</label>
+                    </div>
+                    <div id="containerButton">
+                      <label id="tY">ty = 0</label>
+                    </div>
+                </div>
+
+            </div> <!-- /row -->
+    	   </div> <!-- /container -->
+      </div><!-- /ww -->
+    </header>
+  </header>
+
+    <!-- Footer -->
+    <footer class="text-center">
+
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Lucas Badar&oacute; 2017
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/freelancer.min.js"></script>
+
+    <!-- GameEngine -->
+    <script type="text/javascript">
+
+      var filaAcoes = [];
+
+      var ACAO = {
+          PARADO: "P",
+          CIMA: "C",
+          BAIXO: "B",
+          ESQUERDA: "E",
+          DIREITA: "D"
+      };
+
+      var canvasWidth = 448;
+      var canvasHeight = 448;
+
+      var spriteWidth = 128;
+      var spriteHeight = 128;
+
+      var rows = 4;
+      var cols = 4;
+
+      var trackUp = 0;
+      var trackDown = 1;
+      var trackLeft = 2;
+      var trackRight = 3;
+
+      var widthPers = spriteWidth/cols;
+      var heightPers = spriteHeight/rows;
+
+      var curFrame = 0;
+      var frameCount = 4;
+
+      var srcX;
+      var srcY;
+
+      var left = false;
+      var right = true;
+
+      var speed = 0.05;
+
+      var canvas = document.getElementById('GameBoardCanvas');
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+
+      var ctx = canvas.getContext("2d");
+
+      var board = [
+          [ 23, 23, 23, 23, 23, 23, 23 ],
+          [ 23, 23, 23, 23, 23, 23, 23 ],
+          [ 23, 23, 45, 45, 45, 23, 23 ],
+          [ 23, 23, 11, 5, 19, 23, 23 ],
+          [ 23, 23, 46, 35, 47, 23, 23 ],
+          [ 23, 23, 23, 23, 23, 23, 23 ],
+          [ 23, 23, 23, 23, 23, 23, 23 ]
+      ];
+
+      var player = {
+        x: 0,
+        y: 0
+      };
+
+      function inicializaPersonagem(){
+        for(var y = 0; y < board.length; y++){
+          for(var x = 0; x < board[y].length; x++){
+            if(board[y][x] == 11) {
+              player.x = x;
+              player.y = y;
+              break;
+            }
+          }
+        }
+      }
+
+      inicializaPersonagem();
+
+      var personagem = new Image();
+      personagem.src = "rafiki.png";
+
+      function updateFrame(){
+        curFrame = ++curFrame % frameCount;
+        srcX = curFrame * widthPers;
+        ctx.clearRect(player.x*64,player.y*64,64,64);
+
+        if(filaAcoes.length == 0) {
+          acao = ACAO.PARADO;
+          srcY = trackDown * heightPers;
+        } else {
+          var acao = filaAcoes[0];
+          var targetX = acao[0];
+          var targetY = acao[1];
+          var tipoAcao = acao[2];
+          if(tipoAcao == ACAO.CIMA) { //Indo para Cima
+              srcY = trackUp * heightPers;
+              player.y-=speed;
+              acao = ACAO.CIMA;
+              if(targetY > player.y) {
+                player.y = targetY;
+                filaAcoes.shift();
+              }
+          } else if(tipoAcao == ACAO.BAIXO) { //Indo para Baixo
+              srcY = trackDown * heightPers;
+              player.y+=speed;
+            if(targetY < player.y) {
+              player.y = targetY;
+              filaAcoes.shift();
+            }
+          } else if(tipoAcao == ACAO.ESQUERDA) { //Indo para Esquerda
+              srcY = trackLeft * heightPers;
+              player.x-=speed;
+              if(targetX > player.x) {
+                player.x = targetX;
+                filaAcoes.shift();
+              }
+          } else if(tipoAcao == ACAO.DIREITA) { //Indo para Direita
+              srcY = trackRight * heightPers;
+              player.x+=speed;
+              if(targetX < player.x) {
+                player.x = targetX;
+                filaAcoes.shift();
+              }
+          }
+        }
+        document.getElementById('debugX').innerHTML = 'x = ' + player.x;
+        document.getElementById('debugY').innerHTML = 'y = ' + player.y;
+      }
+
+      function draw(){
+        updateFrame();
+        ctx.drawImage(personagem, srcX, srcY, widthPers, heightPers, player.x*64, player.y*64, 64, 64);
+      }
+
+      function stop(){
+        clearInterval(refreshIntervalId);
+      }
+
+      var refreshIntervalId = setInterval(draw,100);
+
+      window.blockly_loaded = function(blockly) {
+        return window.Blockly = blockly;
+      }
+
+      window.run_code = function() {
+        var targetX = player.x;
+        var targetY = player.y;
+        code = window.Blockly.JavaScript.workspaceToCode();
+        var array = code.split(",");
+        var mov = '';
+
+        for(var x = 0; x < array.length; x++){
+          mov = array[x].trim();
+          if(mov == ACAO.CIMA)
+            targetY--;
+          else if(mov == ACAO.BAIXO)
+            targetY++;
+          else if(mov == ACAO.ESQUERDA)
+            targetX--;
+          else if(mov == ACAO.DIREITA)
+            targetX++;
+          var acao = [targetX, targetY, mov];
+          filaAcoes.push(acao);
+        }
+        window.alert(filaAcoes.toString());
+        document.getElementById('tX').innerHTML = 'tx = ' + targetX;
+        document.getElementById('tY').innerHTML = 'ty = ' + targetY;
+
+      }
+
+    </script>
+
+
+</body>
+
+</html>
