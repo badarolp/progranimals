@@ -185,9 +185,6 @@ section {
   background: white;
 }
 
-section p {
-  text-align: right;
-}
 
 section .container {
   padding-top: 100px;
@@ -222,10 +219,6 @@ section .intro-text .skills {
     font-size: 1.75em;
     color: #CC9904;
   }
-}
-
-#ajuda p {
-  text-align: left;
 }
 
 

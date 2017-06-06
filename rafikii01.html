@@ -92,7 +92,7 @@
 
                 <div id="containerEngine">
                     <div id="containerCanvas">
-                      <canvas id="GameBoardCanvas" width="448px" height="448px" style='background-image: url(img/mapaCid04.png)'></canvas>
+                      <canvas id="GameBoardCanvas" width="448px" height="448px" style='background-image: url(img/mapaRaf01.png)'></canvas>
                     </div>
 
 
@@ -106,16 +106,16 @@
 
                       <form>
                         <div>
-                          <a class="btn fase" href="cid01.html">FASE 1</a>
+                          <a class="btn faseAtual">FASE 1</a>
                         </div>
                         <div>
-                          <a class="btn fase" href="cid02.html">FASE 2</a>
+                          <a class="btn fase" href="rafikii02.html">FASE 2</a>
                         </div>
                         <div>
-                          <a class="btn fase" href="cid03.html">FASE 3</a>
+                          <a class="btn fase" href="rafikii03.html">FASE 3</a>
                         </div>
+                          <a class="btn fase" href="rafikii04.html">FASE 4</a>
                         <div>
-                          <a class="btn faseAtual">FASE 4</a>
                         </div>
                       </form>
                     </div>
@@ -219,13 +219,13 @@
       var ctx = canvas.getContext("2d");
 
       var board = [
-          [ 20, 0, 22, 23, 9, 9, 10 ],
-          [ 21, 1, 3, 23, 2, 2, 31 ],
-          [ 2, 2, 2, 23, 2, 41, 8 ],
-          [ 35, 35, 2, 27, 2, 32, 35 ],
-          [ 36, 36, 2, 6, 2, 7, 36 ],
-          [ 23, 23, 35, 35, 2, 38, 23 ],
-          [ 23, 23, 36, 36, 34, 36, 23 ]
+          [ 23, 23, 45, 23, 23, 23, 23 ],
+          [ 23, 23, 11, 23, 23, 23, 23 ],
+          [ 23, 23, 1, 23, 23, 23, 23 ],
+          [ 23, 23, 2, 45, 45, 23, 23 ],
+          [ 23, 23, 2, 5, 19, 23, 23 ],
+          [ 23, 23, 35, 35, 47, 23, 23 ],
+          [ 23, 23, 23, 23, 23, 23, 23 ]
       ];
 
       var player = {
@@ -255,7 +255,7 @@
       inicializaPersonagem();
 
       var personagem = new Image();
-      personagem.src = "img/cid.png";
+      personagem.src = "img/rafikii.png";
 
       function updateFrame(){
         curFrame = ++curFrame % frameCount;
@@ -269,9 +269,9 @@
             srcY = trackStop * heightPers;
             if((final.x == player.x) && (final.y == player.y)) {
               ctx.drawImage(personagem, srcX, srcY, widthPers, heightPers, player.x*64, player.y*64, 64, 64);
-              window.alert("               Parabéns!\nVocê concluiu o nível");
+              window.alert("                   Parabéns!\nVocê concluiu o primeiro mapa");
               stop(false);
-              window.open("index.html#jogar", "_self");
+              window.open("rafikii02.html", "_self");
             } else if (jogando)
               tenteNovamente();
           }

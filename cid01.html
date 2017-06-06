@@ -40,7 +40,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="#page-top">PROGRANIMAIS</a>
+                <a class="navbar-brand" href="index.html">PROGRANIMAIS</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -92,7 +92,7 @@
 
                 <div id="containerEngine">
                     <div id="containerCanvas">
-                      <canvas id="GameBoardCanvas" width="448px" height="448px" style='background-image: url(img/mapaCid04.png)'></canvas>
+                      <canvas id="GameBoardCanvas" width="448px" height="448px" style='background-image: url(img/mapaCid01.png)'></canvas>
                     </div>
 
 
@@ -101,21 +101,21 @@
                          <a class="btn green" onclick="run_code()">Começar</a>
                       </div>
                       <div>
-                         <a class="btn blue" onclick="">Reiniciar</a>
+                         <a class="btn blue" onclick="location.reload()">Reiniciar</a>
                       </div>
 
                       <form>
                         <div>
-                           <a class="btn faseAtual">FASE 1</a>
+                          <a class="btn faseAtual">FASE 1</a>
                         </div>
                         <div>
-                           <a class="btn fase" href="iniciante2.html">FASE 2</a>
+                          <a class="btn fase" href="cid02.html">FASE 2</a>
                         </div>
                         <div>
-                           <a class="btn fase" href="iniciante3.html">FASE 3</a>
+                          <a class="btn fase" href="cid03.html">FASE 3</a>
                         </div>
                         <div>
-                           <a class="btn fase" href="iniciante4.html">FASE 4</a>
+                          <a class="btn fase" href="cid04.html">FASE 4</a>
                         </div>
                       </form>
                     </div>
@@ -170,6 +170,7 @@
 
       var filaAcoes = [];
 
+      var jogando = false;
       var falhou = false;
 
       var ACAO = {
@@ -209,7 +210,7 @@
       var left = false;
       var right = true;
 
-      var speed = 0.05;
+      var speed = 0.15;
 
       var canvas = document.getElementById('GameBoardCanvas');
       canvas.width = canvasWidth;
@@ -218,13 +219,13 @@
       var ctx = canvas.getContext("2d");
 
       var board = [
-          [ 20, 0, 22, 23, 9, 9, 10 ],
-          [ 21, 1, 3, 23, 2, 2, 31 ],
-          [ 2, 2, 2, 23, 2, 41, 8 ],
-          [ 35, 35, 2, 27, 2, 32, 35 ],
-          [ 36, 36, 2, 6, 2, 7, 36 ],
-          [ 23, 23, 35, 35, 2, 38, 23 ],
-          [ 23, 23, 36, 36, 34, 36, 23 ]
+          [ 23, 23, 23, 23, 23, 23, 23 ],
+          [ 23, 23, 23, 23, 23, 23, 23 ],
+          [ 23, 23, 45, 45, 45, 23, 23 ],
+          [ 23, 23, 11, 5, 19, 23, 23 ],
+          [ 23, 23, 46, 35, 47, 23, 23 ],
+          [ 23, 23, 23, 23, 23, 23, 23 ],
+          [ 23, 23, 23, 23, 23, 23, 23 ]
       ];
 
       var player = {
@@ -243,7 +244,7 @@
             if((board[y][x] == 11) || (board[y][x] == 0)) {
               player.x = x;
               player.y = y;
-            } else if(board[y][x] == 19) {
+            } else if((board[y][x] == 19) || (board[y][x] == 10)) {
               final.x = x;
               final.y = y;
             }
@@ -262,14 +263,17 @@
         ctx.clearRect(player.x*64,player.y*64,64,64);
 
         if(filaAcoes.length == 0) {
-          if(!falhou) {
+          if(falhou)
+            tenteNovamente();
+          else {
             srcY = trackStop * heightPers;
             if((final.x == player.x) && (final.y == player.y)) {
               ctx.drawImage(personagem, srcX, srcY, widthPers, heightPers, player.x*64, player.y*64, 64, 64);
-              window.alert("Parabéns!");
+              window.alert("                   Parabéns!\nVocê concluiu o primeiro mapa");
               stop(false);
-              window.open("index.html", "_self");
-            }
+              window.open("cid02.html", "_self");
+            } else if (jogando)
+              tenteNovamente();
           }
         } else {
           var acao = filaAcoes[0];
@@ -285,7 +289,7 @@
                 filaAcoes.shift();
               }
             } else
-              stop(true);
+              tenteNovamente();
           } else if(tipoAcao == ACAO.BAIXO) { //Indo para Baixo
             srcY = trackDown * heightPers;
             if(canMove(targetX, targetY)) {
@@ -295,7 +299,7 @@
                 filaAcoes.shift();
               }
             } else
-              stop(true);
+              tenteNovamente();
           } else if(tipoAcao == ACAO.ESQUERDA) { //Indo para Esquerda
               srcY = trackLeft * heightPers;
               if(canMove(targetX, targetY)) {
@@ -305,7 +309,7 @@
                   filaAcoes.shift();
                 }
               } else
-                stop();
+                tenteNovamente();
           } else if(tipoAcao == ACAO.DIREITA) { //Indo para Direita
               srcY = trackRight * heightPers;
               if(canMove(targetX, targetY)) {
@@ -335,6 +339,13 @@
         clearInterval(refreshIntervalId);
       }
 
+      function tenteNovamente() {
+        stop(true);
+        ctx.drawImage(personagem, srcX, srcY, widthPers, heightPers, player.x*64, player.y*64, 64, 64);
+        window.alert("Tente novamente...");
+        location.reload();
+      }
+
       var refreshIntervalId = setInterval(draw,100);
 
       window.blockly_loaded = function(blockly) {
@@ -342,12 +353,15 @@
       }
 
       window.run_code = function() {
+        jogando = true;
         var targetX = player.x;
         var targetY = player.y;
         code = window.Blockly.JavaScript.workspaceToCode();
         var array = code.split(",");
         var mov = '';
-
+        if(array.toString().trim() == '') {
+          tenteNovamente();
+        }
         for(var x = 0; x < array.length; x++){
           mov = array[x].trim();
           if(mov == ACAO.CIMA)
