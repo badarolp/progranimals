@@ -130,7 +130,7 @@ header .intro-text .skills {
   color: white;
 }
 .navbar-custom .navbar-nav li a:hover {
-  color: #18BC9C;
+
   outline: none;
 }
 .navbar-custom .navbar-nav li a:focus,
@@ -179,25 +179,56 @@ header .intro-text .skills {
     font-size: 1.5em;
   }
 }
+
 section {
-  padding: 100px 0;
+  text-align: center;
+  background: white;
 }
-section h2 {
-  margin: 0;
-  font-size: 3em;
+
+section p {
+  text-align: right;
 }
-section.success {
-  background: #18BC9C;
-  color: white;
+
+section .container {
+  padding-top: 100px;
+  padding-bottom: 50px;
 }
-@media (max-width: 767px) {
-  section {
-    padding: 75px 0;
+section img {
+  display: block;
+  margin: 0 auto 20px;
+}
+section .intro-text .name {
+  display: block;
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  color: #333;
   }
-  section.first {
-    padding-top: 75px;
+
+}
+section .intro-text .skills {
+  font-size: 1.25em;
+  font-weight: 300;
+}
+@media (min-width: 768px) {
+  section .container {
+    padding-top: 130px;
+    padding-bottom: 100px;
+  }
+  section .intro-text .name {
+    font-size: 4.75em;
+    color: #003338;
+  }
+  section .intro-text .skills {
+    font-size: 1.75em;
+    color: #CC9904;
   }
 }
+
+#ajuda p {
+  text-align: left;
+}
+
+
 .floating-label-form-group {
   position: relative;
   margin-bottom: 0;
@@ -396,4 +427,123 @@ fieldset[disabled] .btn-success.active {
 }
 .scroll-top .btn:focus {
   outline: none;
+}
+
+#header
+{
+	color:#1abc9c;
+}
+#blockly
+{
+	border:1px solid #CCC;
+	padding-left:0;
+	height:600px;
+}
+#blockly_editor
+{
+	width:100%;
+	float:left;
+}
+#description
+{
+	width:49%;
+	float:right;
+	margin-top:0;
+}
+#button_run
+{
+	margin-left:2%;
+}
+
+#GameBoardCanvas {
+	border:1px solid #CCC;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+}
+
+form .content { width:100%; }
+form .content .blc { position:relative;float:left;width:5%; }
+label { display:block; }
+input[type="text"] { display:block; }
+
+
+#containerBlockly {
+    float:left;
+    width:400px;
+    padding:10px;
+    background:#bfb;
+}
+#containerButton {
+    float:right;
+    width:40px;
+    padding:10px;
+    background:#ddf;
+}
+#containerCanvas {
+    float:right;
+    width:500px;
+    padding:10px;
+    background:#dff;
+}
+
+#blcAtual
+{
+	brackground: red;
+}
+
+
+.btn {
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 22px;
+  transition: .3s;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  -o-transition: .3s;
+  display: inline-block;
+}
+
+.green {
+  color: #2ecc71;
+  border: 2px #2ecc71 solid;
+}
+
+.green:hover {
+  color: #fff;
+  background-color: #2ecc71;
+}
+
+.blue {
+  color: #55acee;
+  border: 2px #55acee solid;
+}
+
+.blue:hover {
+  background-color: #55acee;
+  color: #fff
+}
+
+form {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.fase {
+  font-size: 15px;
+  color: #e67e22;
+}
+
+.fase:hover {
+  color: #fff;
+  background-color: #e67e22;
+}
+
+.faseAtual {
+  color: #fff;
+  background-color: grey;
 }

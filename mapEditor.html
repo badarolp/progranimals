@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+        <!-- Theme CSS -->
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <link href="css/freelancer.css" rel="stylesheet">
+
+
+    <script type="text/javascript" src="./jquery-2.1.0.js.download"></script>
+
+    <script type="text/javascript">//<![CDATA[
+
+      $(window).load(function(){
+        var canvas = $('#GameBoardCanvas');
+
+        var board = [
+            [ 23, 45, 23, 23, 23, 23, 23 ],
+            [ 23, 11, 45, 23, 23, 23, 23 ],
+            [ 23, 1, 5, 45, 23, 45, 23 ],
+            [ 23, 35, 2, 5, 45, 19, 23 ],
+            [ 23, 23, 35, 2, 5, 17, 23 ],
+            [ 23, 23, 23, 35, 35, 35, 23 ],
+            [ 23, 23, 23, 23, 23, 23, 23 ]
+        ];
+
+        //Draw the game board
+        function draw(){
+          var width = canvas.width();
+          var blockSize = width/board.length;
+          var ctx = canvas[0].getContext('2d');
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.clearRect(0, 0, width, width);
+          //Loop through the board array drawing the walls and the goal
+          for(var y = 0; y < board.length; y++){
+            for(var x = 0; x < board[y].length; x++){
+              var img = new Image();
+              var posX = blockSize*x;
+              var posY = blockSize*y;
+              img.src = "img/" + board[y][x] + ".png";
+              ctx.drawImage(img, posX, posY, blockSize, blockSize);
+            }
+          }
+        }
+
+        draw();
+      });
+
+    </script>
+
+</head>
+
+<body>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/freelancer.min.js"></script>
+
+
+        <div id="containerCanvas">
+          <canvas id="GameBoardCanvas" width="448px" height="448px"></canvas>
+        </div>
+
+
+</body>
+
+</html>

@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
 
-    <title>Progranimals</title>
+    <title>Progranimais</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="#page-top">PROGRANIMALS</a>
+                <a class="navbar-brand" href="#page-top">PROGRANIMAIS</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -85,51 +85,41 @@
                 		<!-- Blockly will be injected in the iframe below //-->
                 		<iframe id="blockly" src="blockly.html" width="100%"></iframe>
 
-                		<form>
-                		    <div class="content">
-                		        <div class="blc">
-                		           <a href="iniciante.html"><p>1</p></a>
-                		        </div>
-                		        <div class="blc">
-                		           <a href="iniciante2.html"><p>2</p></a>
-                		        </div>
-                		        <div class="blc">
-                		           <a href="iniciante3.html"><p>3</p></a>
-                		        </div>
-                						<div class="blc">
-                		           <a href="iniciante4.html"><p>4</p></a>
-                		        </div>
-                						<div class="blc">
-                		           <a href="iniciante5.html"><p>5</p></a>
-                		        </div>
-                		    </div>
-                		</form>
+
                 	</div>
 
                 </div>
 
                 <div id="containerEngine">
                     <div id="containerCanvas">
-                      <canvas id="GameBoardCanvas" width="448px" height="448px" style='background-image: url(mapa01.png)'></canvas>
+                      <canvas id="GameBoardCanvas" width="448px" height="448px" style='background-image: url(img/mapaCid04.png)'></canvas>
                     </div>
-                    <div id="containerButton">
-                      <button id="button_run" onclick="run_code()">Start</button>
+
+
+                    <div class="content">
+                      <div>
+                         <a class="btn green" onclick="run_code()">Começar</a>
+                      </div>
+                      <div>
+                         <a class="btn blue" onclick="">Reiniciar</a>
+                      </div>
+
+                      <form>
+                        <div>
+                           <a class="btn faseAtual">FASE 1</a>
+                        </div>
+                        <div>
+                           <a class="btn fase" href="iniciante2.html">FASE 2</a>
+                        </div>
+                        <div>
+                           <a class="btn fase" href="iniciante3.html">FASE 3</a>
+                        </div>
+                        <div>
+                           <a class="btn fase" href="iniciante4.html">FASE 4</a>
+                        </div>
+                      </form>
                     </div>
-                    <div id="containerButton">
-                      <button id="button_run" onclick="run_code()">Restart</button>
-                    </div>
-                    <div id="containerButton">
-                      <label id="debugX">x = 0</label>
-                    </div>
-                    <div id="containerButton">
-                      <label id="debugY">y = 0</label>
-                    </div>
-                    <div id="containerButton">
-                      <label id="tX">tx = 0</label>
-                    </div>
-                    <div id="containerButton">
-                      <label id="tY">ty = 0</label>
-                    </div>
+
                 </div>
 
             </div> <!-- /row -->
@@ -145,7 +135,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; Lucas Badar&oacute; 2017
+                        Copyright &copy; Badar&oacute; 2017
                     </div>
                 </div>
             </div>
@@ -194,15 +184,16 @@
       var canvasHeight = 448;
 
       var spriteWidth = 128;
-      var spriteHeight = 128;
+      var spriteHeight = 160;
 
-      var rows = 4;
+      var rows = 5;
       var cols = 4;
 
-      var trackUp = 0;
-      var trackDown = 1;
-      var trackLeft = 2;
-      var trackRight = 3;
+      var trackStop = 0;
+      var trackUp = 1;
+      var trackDown = 2;
+      var trackLeft = 3;
+      var trackRight = 4;
 
       var widthPers = spriteWidth/cols;
       var heightPers = spriteHeight/rows;
@@ -213,7 +204,7 @@
       var srcX;
       var srcY;
 
-      srcY = trackDown * heightPers;
+      srcY = trackStop * heightPers;
 
       var left = false;
       var right = true;
@@ -227,13 +218,13 @@
       var ctx = canvas.getContext("2d");
 
       var board = [
-          [ 23, 23, 23, 23, 23, 23, 23 ],
-          [ 23, 23, 23, 23, 23, 23, 23 ],
-          [ 23, 23, 45, 45, 45, 23, 23 ],
-          [ 23, 23, 11, 5, 19, 23, 23 ],
-          [ 23, 23, 46, 35, 47, 23, 23 ],
-          [ 23, 23, 23, 23, 23, 23, 23 ],
-          [ 23, 23, 23, 23, 23, 23, 23 ]
+          [ 20, 0, 22, 23, 9, 9, 10 ],
+          [ 21, 1, 3, 23, 2, 2, 31 ],
+          [ 2, 2, 2, 23, 2, 41, 8 ],
+          [ 35, 35, 2, 27, 2, 32, 35 ],
+          [ 36, 36, 2, 6, 2, 7, 36 ],
+          [ 23, 23, 35, 35, 2, 38, 23 ],
+          [ 23, 23, 36, 36, 34, 36, 23 ]
       ];
 
       var player = {
@@ -249,7 +240,7 @@
       function inicializaPersonagem(){
         for(var y = 0; y < board.length; y++){
           for(var x = 0; x < board[y].length; x++){
-            if(board[y][x] == 11) {
+            if((board[y][x] == 11) || (board[y][x] == 0)) {
               player.x = x;
               player.y = y;
             } else if(board[y][x] == 19) {
@@ -263,7 +254,7 @@
       inicializaPersonagem();
 
       var personagem = new Image();
-      personagem.src = "rafiki.png";
+      personagem.src = "img/cid.png";
 
       function updateFrame(){
         curFrame = ++curFrame % frameCount;
@@ -272,12 +263,12 @@
 
         if(filaAcoes.length == 0) {
           if(!falhou) {
-            srcY = trackDown * heightPers;
+            srcY = trackStop * heightPers;
             if((final.x == player.x) && (final.y == player.y)) {
               ctx.drawImage(personagem, srcX, srcY, widthPers, heightPers, player.x*64, player.y*64, 64, 64);
               window.alert("Parabéns!");
               stop(false);
-              window.open("index.html", "_self"); 
+              window.open("index.html", "_self");
             }
           }
         } else {
@@ -327,8 +318,6 @@
                 stop(true);
           }
         }
-        document.getElementById('debugX').innerHTML = 'x = ' + player.x;
-        document.getElementById('debugY').innerHTML = 'y = ' + player.y;
       }
 
       function draw(){
@@ -372,9 +361,6 @@
           var acao = [targetX, targetY, mov];
           filaAcoes.push(acao);
         }
-        document.getElementById('tX').innerHTML = 'tx = ' + targetX;
-        document.getElementById('tY').innerHTML = 'ty = ' + targetY;
-
       }
 
     </script>
